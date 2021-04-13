@@ -28,6 +28,7 @@ public class VistaPrincipal extends JFrame {
 	private JPanel panelEliminados;
 	private JPanel panelTurno;
 	private JPanel panelMovimientos;
+	private JMenuItem mntmPreferences;
 	/**
 	 * Create the frame.
 	 */
@@ -55,6 +56,12 @@ public class VistaPrincipal extends JFrame {
 			}
 		});
 		mnFile.add(mntmExit);
+		
+		JMenu mnEdit = new JMenu("Edit");
+		menuBar.add(mnEdit);
+		
+		mntmPreferences = new JMenuItem("Preferences");
+		mnEdit.add(mntmPreferences);
 		
 		JMenu mnAbout = new JMenu("Help");
 		menuBar.add(mnAbout);
@@ -105,6 +112,9 @@ public class VistaPrincipal extends JFrame {
 	}
 	public JPanel getPanelTablero() {
 		return panelTablero;
+	}
+	public JMenuItem getMntmPreferences() {
+		return mntmPreferences;
 	}
 	
 	
