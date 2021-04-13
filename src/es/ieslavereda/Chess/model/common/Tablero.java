@@ -1,6 +1,8 @@
 package es.ieslavereda.Chess.model.common;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -9,9 +11,9 @@ import javax.swing.SwingConstants;
 import java.awt.Rectangle;
 import java.awt.GridLayout;
 
-public class Tablero extends JPanel{
+public class Tablero extends JPanel {
 
-	private HashMap<Coordenada,Celda> tablero;
+	private HashMap<Coordenada, Celda> tablero;
 	private Lista<Pieza> blancas;
 	private Lista<Pieza> blancasEliminadas;
 	private Lista<Pieza> negras;
@@ -23,13 +25,13 @@ public class Tablero extends JPanel{
 		super();
 		setBounds(new Rectangle(0, 0, 500, 500));
 		setLayout(new GridLayout(10, 10, 0, 0));
-		
-		tablero = new HashMap<Coordenada,Celda>();
+
+		tablero = new HashMap<Coordenada, Celda>();
 		blancas = new Lista<>();
 		blancasEliminadas = new Lista<>();
 		negras = new Lista<>();
 		negrasEliminadas = new Lista<>();
-		
+
 		inicializar();
 	}
 
@@ -38,7 +40,7 @@ public class Tablero extends JPanel{
 		// Inicializamos el tablero
 		for (int fila = 0; fila < 8; fila++) {
 			for (int col = 0; col < 8; col++)
-				tablero.put(new Coordenada((char)('A'+col),1+fila), new Celda()) ;
+				tablero.put(new Coordenada((char) ('A' + col), 1 + fila), new Celda());
 		}
 
 		whiteKing = new King(Color.WHITE, new Coordenada('E', 1), this);
@@ -67,40 +69,42 @@ public class Tablero extends JPanel{
 			blancas.addHead(new Pawn(Color.WHITE, new Coordenada((char) ('A' + i), 2), this));
 			negras.addHead(new Pawn(Color.BLACK, new Coordenada((char) ('A' + i), 7), this));
 		}
-		
+
 		addToPanel();
 
 	}
 
 	private void addToPanel() {
-		
+
+		// Añadir parte superior
 		add(getNewLabel(""));
-		for(int i = 0;i<8;i++)
-			add(getNewLabel(String.valueOf((char)('A'+i))));
+		for (int i = 0; i < 8; i++)
+			add(getNewLabel(String.valueOf((char) ('A' + i))));
 		add(getNewLabel(""));
-		
-		for(int fil=8;fil>=1;fil--) {
+
+		for (int fil = 8; fil >= 1; fil--) {
 			add(getNewLabel(String.valueOf(fil)));
-			for(int col=0;col<8;col++) {
-				Celda celda = tablero.get(new Coordenada((char)('A' + col),fil));
-				if((fil+col)%2==0)
-					celda.setCeldaBackground(Color.WHITE);
-				else 
-					celda.setCeldaBackground(Color.BLACK);
-				
+			for (int col = 0; col < 8; col++) {
+
+				Coordenada c = new Coordenada((char) ('A' + col), fil);
+
+				Celda celda = tablero.get(c);
+				if ((fil + col) % 2 == 0)
+					celda.setAsWhiteCell();
+				else
+					celda.setAsBlackCell();
+
 				add(celda);
 			}
-			add(getNewLabel(String.valueOf(fil)));			
+			add(getNewLabel(String.valueOf(fil)));
 		}
-		
-		
+
+		// Añadir parte inferior
 		add(getNewLabel(""));
-		for(int i = 0;i<8;i++)
-			add(getNewLabel(String.valueOf((char)('A'+i))));
+		for (int i = 0; i < 8; i++)
+			add(getNewLabel(String.valueOf((char) ('A' + i))));
 		add(getNewLabel(""));
 
-
-		
 	}
 
 	public boolean contiene(Coordenada c) {
@@ -131,8 +135,6 @@ public class Tablero extends JPanel{
 		return tablero.get(c);
 	}
 
-
-
 	public boolean blackKingIsAlive() {
 		return negras.contains(blackKing);
 	}
@@ -140,15 +142,35 @@ public class Tablero extends JPanel{
 	public boolean whiteKingIsAlive() {
 		return blancas.contains(whiteKing);
 	}
-	
+
 	private JLabel getNewLabel(String text) {
 		JLabel label = new JLabel(text);
-		label.setOpaque(true);	
+		label.setOpaque(true);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setBackground(java.awt.Color.DARK_GRAY);
 		label.setForeground(java.awt.Color.WHITE);
 		return label;
 	}
 
+	public Coordenada getCoordenadaOfCelda(Celda c) {
+
+		Set<Coordenada> coordenadas = tablero.keySet();
+
+		Iterator<Coordenada> it = coordenadas.iterator();
+		boolean encontrado = false;
+		Coordenada coordenada=null;
+		
+		while (it.hasNext() && !encontrado) {
+			coordenada = it.next();
+			if(tablero.get(coordenada).equals(c))
+				encontrado=true;
+		}
+		
+		if(encontrado)
+			return coordenada;
+		else
+			return null;
+
+	}
 
 }

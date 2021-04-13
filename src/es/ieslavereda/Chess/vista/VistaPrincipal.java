@@ -24,7 +24,10 @@ import java.awt.Color;
 public class VistaPrincipal extends JFrame {
 
 	private JPanel contentPane;
-
+	private JPanel panelTablero;
+	private JPanel panelEliminados;
+	private JPanel panelTurno;
+	private JPanel panelMovimientos;
 	/**
 	 * Create the frame.
 	 */
@@ -62,13 +65,13 @@ public class VistaPrincipal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		JPanel panelTablero = new Tablero();
+		panelTablero = new Tablero();
 		
-		JPanel panelEliminados = new JPanel();
+		panelEliminados = new JPanel();
 		
-		JPanel panelTurno = new JPanel();
+		panelTurno = new JPanel();
 		
-		JPanel panelMovimientos = new JPanel();
+		panelMovimientos = new JPanel();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -100,4 +103,9 @@ public class VistaPrincipal extends JFrame {
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
+	public JPanel getPanelTablero() {
+		return panelTablero;
+	}
+	
+	
 }

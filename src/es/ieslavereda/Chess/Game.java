@@ -46,7 +46,7 @@ public class Game extends Thread implements Serializable {
 
 	private String updateScreen(Player player) {
 
-		return "\033[H\033[2J" + board.print(player.getColor());
+		return "\033[H\033[2J";// + board.print(player.getColor());
 
 	}
 
