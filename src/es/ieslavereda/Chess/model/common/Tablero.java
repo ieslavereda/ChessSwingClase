@@ -1,5 +1,6 @@
 package es.ieslavereda.Chess.model.common;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
@@ -14,10 +15,10 @@ import java.awt.GridLayout;
 public class Tablero extends JPanel {
 
 	private HashMap<Coordenada, Celda> tablero;
-	private Lista<Pieza> blancas;
-	private Lista<Pieza> blancasEliminadas;
-	private Lista<Pieza> negras;
-	private Lista<Pieza> negrasEliminadas;
+	private ArrayList<Pieza> blancas;
+	private ArrayList<Pieza> blancasEliminadas;
+	private ArrayList<Pieza> negras;
+	private ArrayList<Pieza> negrasEliminadas;
 	private Pieza blackKing;
 	private Pieza whiteKing;
 
@@ -27,10 +28,10 @@ public class Tablero extends JPanel {
 		setLayout(new GridLayout(10, 10, 0, 0));
 
 		tablero = new HashMap<Coordenada, Celda>();
-		blancas = new Lista<>();
-		blancasEliminadas = new Lista<>();
-		negras = new Lista<>();
-		negrasEliminadas = new Lista<>();
+		blancas = new ArrayList<>();
+		blancasEliminadas = new ArrayList<>();
+		negras = new ArrayList<>();
+		negrasEliminadas = new ArrayList<>();
 
 		inicializar();
 	}
@@ -44,30 +45,30 @@ public class Tablero extends JPanel {
 		}
 
 		whiteKing = new King(Color.WHITE, new Coordenada('E', 1), this);
-		blancas.addHead(whiteKing);
+		blancas.add(whiteKing);
 
-		blancas.addHead(new Rook(Color.WHITE, new Coordenada('A', 1), this));
-		blancas.addHead(new Knight(Color.WHITE, new Coordenada('B', 1), this));
-		blancas.addHead(new Bishop(Color.WHITE, new Coordenada('C', 1), this));
-		blancas.addHead(new Queen(Color.WHITE, new Coordenada('D', 1), this));
-		blancas.addHead(new Bishop(Color.WHITE, new Coordenada('F', 1), this));
-		blancas.addHead(new Knight(Color.WHITE, new Coordenada('G', 1), this));
-		blancas.addHead(new Rook(Color.WHITE, new Coordenada('H', 1), this));
+		blancas.add(new Rook(Color.WHITE, new Coordenada('A', 1), this));
+		blancas.add(new Knight(Color.WHITE, new Coordenada('B', 1), this));
+		blancas.add(new Bishop(Color.WHITE, new Coordenada('C', 1), this));
+		blancas.add(new Queen(Color.WHITE, new Coordenada('D', 1), this));
+		blancas.add(new Bishop(Color.WHITE, new Coordenada('F', 1), this));
+		blancas.add(new Knight(Color.WHITE, new Coordenada('G', 1), this));
+		blancas.add(new Rook(Color.WHITE, new Coordenada('H', 1), this));
 
 		blackKing = new King(Color.BLACK, new Coordenada('E', 8), this);
-		negras.addHead(blackKing);
-		negras.addHead(new Rook(Color.BLACK, new Coordenada('A', 8), this));
-		negras.addHead(new Knight(Color.BLACK, new Coordenada('B', 8), this));
-		negras.addHead(new Bishop(Color.BLACK, new Coordenada('C', 8), this));
-		negras.addHead(new Queen(Color.BLACK, new Coordenada('D', 8), this));
-		negras.addHead(new King(Color.BLACK, new Coordenada('E', 8), this));
-		negras.addHead(new Bishop(Color.BLACK, new Coordenada('F', 8), this));
-		negras.addHead(new Knight(Color.BLACK, new Coordenada('G', 8), this));
-		negras.addHead(new Rook(Color.BLACK, new Coordenada('H', 8), this));
+		negras.add(blackKing);
+		negras.add(new Rook(Color.BLACK, new Coordenada('A', 8), this));
+		negras.add(new Knight(Color.BLACK, new Coordenada('B', 8), this));
+		negras.add(new Bishop(Color.BLACK, new Coordenada('C', 8), this));
+		negras.add(new Queen(Color.BLACK, new Coordenada('D', 8), this));
+		negras.add(new King(Color.BLACK, new Coordenada('E', 8), this));
+		negras.add(new Bishop(Color.BLACK, new Coordenada('F', 8), this));
+		negras.add(new Knight(Color.BLACK, new Coordenada('G', 8), this));
+		negras.add(new Rook(Color.BLACK, new Coordenada('H', 8), this));
 
 		for (int i = 0; i < 8; i++) {
-			blancas.addHead(new Pawn(Color.WHITE, new Coordenada((char) ('A' + i), 2), this));
-			negras.addHead(new Pawn(Color.BLACK, new Coordenada((char) ('A' + i), 7), this));
+			blancas.add(new Pawn(Color.WHITE, new Coordenada((char) ('A' + i), 2), this));
+			negras.add(new Pawn(Color.BLACK, new Coordenada((char) ('A' + i), 7), this));
 		}
 
 		addToPanel();
@@ -106,6 +107,25 @@ public class Tablero extends JPanel {
 		add(getNewLabel(""));
 
 	}
+	
+	public void repaintBoard() {
+		
+		for (int fil = 8; fil >= 1; fil--) {
+			for (int col = 0; col < 8; col++) {
+
+				Coordenada c = new Coordenada((char) ('A' + col), fil);
+
+				Celda celda = tablero.get(c);
+				if ((fil + col) % 2 == 0)
+					celda.setAsWhiteCell();
+				else
+					celda.setAsBlackCell();
+
+
+			}
+			
+		}
+	}
 
 	public boolean contiene(Coordenada c) {
 		return !(c.getRow() > 8 || c.getRow() < 1 || c.getColumn() < 'A' || c.getColumn() > 'H');
@@ -118,16 +138,17 @@ public class Tablero extends JPanel {
 			return getCeldaAt(c).getPieza();
 	}
 
-	public Lista<Pieza> getBlancas() {
+	public ArrayList<Pieza> getBlancas() {
 		return blancas;
 	}
 
 	public void eliminarPieza(Pieza p) {
 
 		if (p.getColor() == Color.WHITE) {
-			blancasEliminadas.addHead(blancas.getAndRemove(p));
+			
+			blancasEliminadas.add(blancas.remove(blancas.indexOf(p)));
 		} else
-			negrasEliminadas.addHead(negras.getAndRemove(p));
+			negrasEliminadas.add(negras.remove(negras.indexOf(p)));
 
 	}
 

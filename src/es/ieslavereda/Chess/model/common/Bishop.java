@@ -1,5 +1,8 @@
 package es.ieslavereda.Chess.model.common;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Bishop extends Pieza {
 
 	public Bishop(Color color,Coordenada posicion, Tablero tablero) {
@@ -14,15 +17,15 @@ public class Bishop extends Pieza {
 	}
 
 	@Override
-	public Lista<Coordenada> getNextMovements() {
+	public Set<Coordenada> getNextMovements() {
 		// TODO Auto-generated method stub
 		return getNextMovements(this);
 	}
 	
-	public static Lista<Coordenada> getNextMovements(Pieza p){
+	public static Set<Coordenada> getNextMovements(Pieza p){
 		
 		Tablero t = p.tablero;
-		Lista<Coordenada> lista = new Lista<>();
+		Set<Coordenada> lista = new HashSet<>();
 		Coordenada c;
 		
 		// UP 

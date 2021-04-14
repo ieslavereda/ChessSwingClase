@@ -1,5 +1,7 @@
 package es.ieslavereda.Chess.model.common;
 
+import java.util.Set;
+
 public class Queen extends Pieza{
 
 	public Queen(Color color, Coordenada posicion, Tablero tablero) {
@@ -14,13 +16,13 @@ public class Queen extends Pieza{
 	}
 
 	@Override
-	public Lista<Coordenada> getNextMovements() {
+	public Set<Coordenada> getNextMovements() {
 		
-		Lista<Coordenada> lista = Rook.getNextMovements(this);
+		Set<Coordenada> movimientos = Rook.getNextMovements(this);
 		
-		lista.addAll(Bishop.getNextMovements(this));
+		movimientos.addAll(Bishop.getNextMovements(this));
 		
-		return lista;
+		return movimientos;
 	}
 	
 	

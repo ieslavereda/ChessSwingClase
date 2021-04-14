@@ -1,5 +1,8 @@
 package es.ieslavereda.Chess.model.common;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class King extends Pieza {
 
 	public King(Color color, Coordenada posicion, Tablero tablero) {
@@ -13,29 +16,29 @@ public class King extends Pieza {
 	}
 
 	@Override
-	public Lista<Coordenada> getNextMovements() {
+	public Set<Coordenada> getNextMovements() {
 
-		Lista<Coordenada> lista = new Lista<Coordenada>();
+		Set<Coordenada> movimientos = new HashSet<Coordenada>();
 
-		addCoordenada(posicion.up(), lista);
-		addCoordenada(posicion.right(), lista);
-		addCoordenada(posicion.down(), lista);
-		addCoordenada(posicion.left(), lista);
-		addCoordenada(posicion.diagonalUpRight(), lista);
-		addCoordenada(posicion.diagonalUpLeft(), lista);
-		addCoordenada(posicion.diagonalDownRight(), lista);
-		addCoordenada(posicion.diagonalDownLeft(), lista);
+		addCoordenada(posicion.up(), movimientos);
+		addCoordenada(posicion.right(), movimientos);
+		addCoordenada(posicion.down(), movimientos);
+		addCoordenada(posicion.left(), movimientos);
+		addCoordenada(posicion.diagonalUpRight(), movimientos);
+		addCoordenada(posicion.diagonalUpLeft(), movimientos);
+		addCoordenada(posicion.diagonalDownRight(), movimientos);
+		addCoordenada(posicion.diagonalDownLeft(), movimientos);
 
-		return lista;
+		return movimientos;
 	}
 
-	private void addCoordenada(Coordenada c, Lista<Coordenada> lista) {
+	private void addCoordenada(Coordenada c, Set<Coordenada> movimientos) {
 		if (tablero.contiene(c)) {
 			if (tablero.getCeldaAt(c).contienePieza()) {
 				if (tablero.getCeldaAt(c).getPieza().getColor() != getColor())
-					lista.addHead(c);
+					movimientos.add(c);
 			} else {
-				lista.addHead(c);
+				movimientos.add(c);
 			}
 		}
 	}

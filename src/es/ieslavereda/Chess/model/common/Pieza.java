@@ -1,5 +1,7 @@
 package es.ieslavereda.Chess.model.common;
 
+import java.util.Set;
+
 public abstract class Pieza {
 
 	protected Tipo tipo;
@@ -48,7 +50,7 @@ public abstract class Pieza {
 		return tipo.getFileName();
 	}
 	
-	public abstract Lista<Coordenada> getNextMovements();
+	public abstract Set<Coordenada> getNextMovements();
 }
 
 

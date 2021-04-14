@@ -1,5 +1,7 @@
 package es.ieslavereda.Chess.model.common;
 
+import java.util.Set;
+
 public class Pawn extends Pieza {
 
 	public Pawn(Color color, Coordenada posicion, Tablero tablero) {
@@ -14,7 +16,7 @@ public class Pawn extends Pieza {
 	}
 
 	@Override
-	public Lista<Coordenada> getNextMovements() {
+	public Set<Coordenada> getNextMovements() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -24,7 +26,7 @@ public class Pawn extends Pieza {
 		
 		if(getColor()==Color.WHITE && posicion.getRow()==8) {
 			tablero.eliminarPieza(this);
-			tablero.getBlancas().addHead(new Queen(Color.WHITE,c,tablero));
+			tablero.getBlancas().add(new Queen(Color.WHITE,c,tablero));
 		} else if (getColor()==Color.BLACK && posicion.getRow()==8){
 			
 		}

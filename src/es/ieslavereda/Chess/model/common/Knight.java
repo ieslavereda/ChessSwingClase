@@ -1,5 +1,7 @@
 package es.ieslavereda.Chess.model.common;
 
+import java.util.Set;
+
 public class Knight extends Pieza{
 
 	public Knight(Color color, Coordenada posicion, Tablero tablero) {
@@ -15,7 +17,7 @@ public class Knight extends Pieza{
 	}
 
 	@Override
-	public Lista<Coordenada> getNextMovements() {
+	public Set<Coordenada> getNextMovements() {
 		// TODO Auto-generated method stub
 		return null;
 	}

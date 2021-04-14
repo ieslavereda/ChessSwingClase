@@ -1,5 +1,8 @@
 package es.ieslavereda.Chess.model.common;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Rook extends Pieza {
 
 	public Rook(Color color, Coordenada posicion, Tablero tablero) {
@@ -15,25 +18,25 @@ public class Rook extends Pieza {
 	}
 
 	@Override
-	public Lista<Coordenada> getNextMovements() {
+	public Set<Coordenada> getNextMovements() {
 		
 		return getNextMovements(this);
 	}
 	
-	public static Lista<Coordenada> getNextMovements(Pieza p){
+	public static Set<Coordenada> getNextMovements(Pieza p){
 		
 		Tablero t = p.tablero;
-		Lista<Coordenada> lista = new Lista<>();
+		Set<Coordenada> lista = new HashSet<>();
 		Coordenada c;
 		
 		// UP 
 		c= p.posicion.up();
 		while(t.contiene(c) && t.getPiezaAt(c)==null) {
-			lista.addHead(c);
+			lista.add(c);
 			c=c.up();
 		}
 		if(t.contiene(c) && t.getPiezaAt(c).getColor() == p.getColor()) 
-			lista.addHead(c);
+			lista.add(c);
 		
 		// Right
 		

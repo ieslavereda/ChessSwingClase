@@ -13,6 +13,7 @@ import es.ieslavereda.Chess.model.common.Color;
 import es.ieslavereda.Chess.model.common.Pieza;
 import es.ieslavereda.Chess.vista.Preferencias;
 import es.ieslavereda.Chess.vista.VistaPrincipal;
+import es.ieslavereda.Chess.model.common.*;
 
 public class ControladorPrincipal implements ActionListener{
 
@@ -78,6 +79,8 @@ public class ControladorPrincipal implements ActionListener{
 		if(color!=null) {
 			jfPreferencias.getBtnColorCeldaBlanca().setBackground(color);
 			MyConfig.getInstancia().setWhiteCellColor(color);
+			Celda.colorCeldaBlanca=color;
+			((Tablero)vista.getPanelTablero()).repaintBoard();
 		}
 		
 	}
@@ -123,7 +126,7 @@ public class ControladorPrincipal implements ActionListener{
 			JOptionPane.showMessageDialog(vista, "Debes seleccionar una pieza", "Error", JOptionPane.ERROR_MESSAGE);
 		} else if(c.getPieza().getColor()!=turno) {
 			JOptionPane.showMessageDialog(vista, "Debes seleccionar una pieza de tu color", "Error", JOptionPane.ERROR_MESSAGE);
-		} else if(c.getPieza().getNextMovements().getSize()==0) {
+		} else if(c.getPieza().getNextMovements().size()==0) {
 			JOptionPane.showMessageDialog(vista, "Esa pieza no la puedes mover", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
