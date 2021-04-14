@@ -3,6 +3,7 @@ package es.ieslavereda.Chess.controladores;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Set;
 
 import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
@@ -117,6 +118,9 @@ public class ControladorPrincipal implements ActionListener{
 
 	private void movimientoConPiezaSeleccionada(Celda c) {
 		
+		// Comprobar un destino posible
+		// Mover
+		// Quitar pieza seleccionada
 		
 	}
 
@@ -128,9 +132,28 @@ public class ControladorPrincipal implements ActionListener{
 			JOptionPane.showMessageDialog(vista, "Debes seleccionar una pieza de tu color", "Error", JOptionPane.ERROR_MESSAGE);
 		} else if(c.getPieza().getNextMovements().size()==0) {
 			JOptionPane.showMessageDialog(vista, "Esa pieza no la puedes mover", "Error", JOptionPane.ERROR_MESSAGE);
+		} else {
+			piezaSeleccionada=c.getPieza();			
+			marcarPosiblesDestinos();
+					
+			}
+			
 		}
+
+	private void marcarPosiblesDestinos() {
+		Set<Coordenada> posiblesMovimientos = piezaSeleccionada.getNextMovements();
+		Tablero tablero = (Tablero)vista.getPanelTablero();
 		
-		vista.getPanelTablero();
+		for(Coordenada cord : posiblesMovimientos) {
+			Celda celda = tablero.getCeldaAt(cord);
+			if(celda.contienePieza())
+				celda.resaltar(Celda.colorBordeCeldaComer, 2);
+			else
+				celda.resaltar(Celda.colorBordeCelda, 2);
+		
+	}
+		
+		
 		
 	}
 

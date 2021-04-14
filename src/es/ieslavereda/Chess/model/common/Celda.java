@@ -21,6 +21,8 @@ public class Celda extends JButton implements Serializable {
 
 	public static java.awt.Color colorCeldaNegra = new java.awt.Color(MyConfig.getInstancia().getBlackCellColor());
 	public static java.awt.Color colorCeldaBlanca = new java.awt.Color(MyConfig.getInstancia().getWhiteCellColor());
+	public static java.awt.Color colorBordeCelda = new java.awt.Color(MyConfig.getInstancia().getBorderNormalCell());
+	public static java.awt.Color colorBordeCeldaComer = new java.awt.Color(MyConfig.getInstancia().getBorderKillCell());
 
 	public Celda() {
 		super();
