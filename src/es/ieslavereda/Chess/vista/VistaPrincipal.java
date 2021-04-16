@@ -25,7 +25,7 @@ public class VistaPrincipal extends JFrame {
 
 	private JPanel contentPane;
 	private JPanel panelTablero;
-	private JPanel panelEliminados;
+	private JPFichasEliminadas panelEliminados;
 	private JPanel panelTurno;
 	private JPanel panelMovimientos;
 	private JMenuItem mntmPreferences;
@@ -74,7 +74,7 @@ public class VistaPrincipal extends JFrame {
 		
 		panelTablero = new Tablero();
 		
-		panelEliminados = new JPanel();
+		panelEliminados = new JPFichasEliminadas();
 		
 		panelTurno = new JPanel();
 		
@@ -115,6 +115,9 @@ public class VistaPrincipal extends JFrame {
 	}
 	public JMenuItem getMntmPreferences() {
 		return mntmPreferences;
+	}
+	public JPFichasEliminadas getPanelEliminados() {
+		return panelEliminados;
 	}
 	
 	

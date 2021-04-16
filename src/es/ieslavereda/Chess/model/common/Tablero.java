@@ -108,6 +108,26 @@ public class Tablero extends JPanel {
 
 	}
 	
+	public Coordenada getCordFromCell(Celda celda) {
+		
+//		for(Coordenada c : tablero.keySet()) {
+//			if(tablero.get(c).equals(celda))
+//				return c;				
+//		}
+		
+		Coordenada c = null;
+		boolean encontrado = false;
+		Iterator<Coordenada> it = tablero.keySet().iterator();
+		
+		while(it.hasNext() && !encontrado) {
+			c=it.next();
+			if(tablero.get(c).equals(celda))
+				encontrado=true;
+		}
+			
+		return (encontrado)?c:null;
+	}
+	
 	public void repaintBoard() {
 		
 		for (int fil = 8; fil >= 1; fil--) {
