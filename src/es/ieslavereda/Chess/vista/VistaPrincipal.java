@@ -26,8 +26,8 @@ public class VistaPrincipal extends JFrame {
 	private JPanel contentPane;
 	private JPanel panelTablero;
 	private JPFichasEliminadas panelEliminados;
-	private JPanel panelTurno;
-	private JPanel panelMovimientos;
+	private JPTurno panelTurno;
+	private JPMovements panelMovimientos;
 	private JMenuItem mntmPreferences;
 	/**
 	 * Create the frame.
@@ -76,9 +76,10 @@ public class VistaPrincipal extends JFrame {
 		
 		panelEliminados = new JPFichasEliminadas();
 		
-		panelTurno = new JPanel();
+		panelTurno = new JPTurno();
 		
-		panelMovimientos = new JPanel();
+		panelMovimientos = new JPMovements();
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -118,6 +119,12 @@ public class VistaPrincipal extends JFrame {
 	}
 	public JPFichasEliminadas getPanelEliminados() {
 		return panelEliminados;
+	}
+	public JPTurno getPanelTurno() {
+		return panelTurno;
+	}
+	public JPMovements getPanelMovimientos() {
+		return panelMovimientos;
 	}
 	
 	

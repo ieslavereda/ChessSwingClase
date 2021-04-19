@@ -1,9 +1,11 @@
 package es.ieslavereda.Chess.model.common;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class Knight extends Pieza{
 
+	private Set<Coordenada> posicionesCandidatas;
 	public Knight(Color color, Coordenada posicion, Tablero tablero) {
 		super(posicion, tablero);
 		
@@ -18,8 +20,33 @@ public class Knight extends Pieza{
 
 	@Override
 	public Set<Coordenada> getNextMovements() {
-		// TODO Auto-generated method stub
-		return null;
+		Set<Coordenada> posicionesCandidatas = new LinkedHashSet<Coordenada>();
+
+		// Comprobamos que la ficha este en el tablero
+		if (posicion == null)
+			return posicionesCandidatas;
+
+		// up
+		addCoordenada(posicion.up().up().left());
+		addCoordenada(posicion.up().up().right());
+
+		// down
+		addCoordenada(posicion.down().down().left());
+		addCoordenada(posicion.down().down().right());
+
+		// right
+		addCoordenada(posicion.right().right().up());
+		addCoordenada(posicion.right().right().down());
+
+		// left
+		addCoordenada(posicion.left().left().up());
+		addCoordenada(posicion.left().left().down());
+
+		return posicionesCandidatas;
+	}
+	protected void addCoordenada(Coordenada c) {
+		if (tablero.contiene(c) && (tablero.getCeldaAt(c).getPieza() == null || tablero.getCeldaAt(c).getPieza().getColor() != getColor()))
+			posicionesCandidatas.add(c);
 	}
 
 }

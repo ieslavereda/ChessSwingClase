@@ -45,6 +45,10 @@ public abstract class Pieza {
 		return tipo.getFileName();
 	}
 	
+	public Coordenada getPosicion() {
+		return posicion;
+	}
+
 	@Override
 	public String toString() {
 		return tipo.getFileName();

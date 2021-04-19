@@ -1,6 +1,7 @@
 package es.ieslavereda.Chess.model.common;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class Rook extends Pieza {
@@ -26,26 +27,43 @@ public class Rook extends Pieza {
 	public static Set<Coordenada> getNextMovements(Pieza p){
 		
 		Tablero t = p.tablero;
-		Set<Coordenada> lista = new HashSet<>();
+		Set<Coordenada> posicionesCandidatas = new LinkedHashSet<Coordenada>();
 		Coordenada c;
-		
-		// UP 
-		c= p.posicion.up();
-		while(t.contiene(c) && t.getPiezaAt(c)==null) {
-			lista.add(c);
-			c=c.up();
-		}
-		if(t.contiene(c) && t.getPiezaAt(c).getColor() == p.getColor()) 
-			lista.add(c);
-		
-		// Right
-		
-		// Down
-		
-		// Left
-		
-		
-		return lista;
-	}
 
+		// Superior
+		c = p.posicion;
+		do {
+			c = c.up();
+			addCoordenada(c, posicionesCandidatas,p);
+		} while (t.contiene(c) && t.getCeldaAt(c).getPieza() == null);
+
+		// Inferior
+		c = p.posicion;
+		do {
+			c = c.down();
+			addCoordenada(c, posicionesCandidatas,p);
+		} while (t.contiene(c) && t.getCeldaAt(c).getPieza() == null);
+
+		// Izquierda
+		c = p.posicion;
+		do {
+			c = c.left();
+			addCoordenada(c, posicionesCandidatas,p);
+		} while (t.contiene(c) && t.getCeldaAt(c).getPieza() == null);
+
+		// Derecha
+		c = p.posicion;
+		do {
+			c = c.right();
+			addCoordenada(c, posicionesCandidatas,p);
+		} while (t.contiene(c) && t.getCeldaAt(c).getPieza() == null);
+
+		return posicionesCandidatas;
+		
+	}
+	private static void addCoordenada(Coordenada c, Set<Coordenada> posicionesCandidatas, Pieza p) {
+		Tablero t = p.tablero;
+		if (t.contiene(c)	&& (t.getCeldaAt(c).getPieza() == null || t.getCeldaAt(c).getPieza().getColor() != p.getColor()))
+			posicionesCandidatas.add(c);
+	}
 }

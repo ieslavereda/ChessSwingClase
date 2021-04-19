@@ -5,13 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
 
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
 
 import es.ieslavereda.Chess.config.MyConfig;
-import es.ieslavereda.Chess.model.common.Celda;
-import es.ieslavereda.Chess.model.common.Color;
-import es.ieslavereda.Chess.model.common.Pieza;
+import es.ieslavereda.Chess.vista.JPTurno;
 import es.ieslavereda.Chess.vista.Preferencias;
 import es.ieslavereda.Chess.vista.VistaPrincipal;
 import es.ieslavereda.Chess.model.common.*;
@@ -19,11 +19,11 @@ import es.ieslavereda.Chess.model.common.*;
 public class ControladorPrincipal implements ActionListener {
 
 	private VistaPrincipal vista;
-	private Color turno;
+	private JPTurno jpTurno;
 	private Pieza piezaSeleccionada;
 	private Preferencias jfPreferencias;
 	private GestionFichasEliminadas gestionFichasEliminadas;
-	
+	private DefaultListModel<Movimiento> dlm;
 
 	public ControladorPrincipal(VistaPrincipal vista) {
 		super();
@@ -36,7 +36,10 @@ public class ControladorPrincipal implements ActionListener {
 
 		gestionFichasEliminadas = new ControladorFichasEliminadas(vista.getPanelEliminados());
 				
-		turno = Color.WHITE;
+		jpTurno = vista.getPanelTurno();
+		
+		dlm = new DefaultListModel<Movimiento>();
+		vista.getPanelMovimientos().getList().setModel(dlm);
 
 		Component[] components = vista.getPanelTablero().getComponents();
 
@@ -125,12 +128,63 @@ public class ControladorPrincipal implements ActionListener {
 					JOptionPane.ERROR_MESSAGE);
 		} else {
 
+			Movimiento m = null;
+			
 			desmarcarPosiblesDestinos();
 			
-			if(c.contienePieza())
+			if(c.contienePieza()) {
+				if((tablero.getCoordenadaOfCelda(c).getRow()==1||tablero.getCoordenadaOfCelda(c).getRow()==8) && piezaSeleccionada instanceof Pawn) {
+					m = new Movimiento(
+							piezaSeleccionada.getPosicion(),
+							tablero.getCoordenadaOfCelda(c),
+							Movimiento.RISE_KILLING,
+							c.getPieza(),
+							null,
+							piezaSeleccionada);		
+					
+				}else {
+					m = new Movimiento(
+							piezaSeleccionada.getPosicion(),
+							tablero.getCoordenadaOfCelda(c),
+							Movimiento.KILL,
+							c.getPieza(),
+							null,
+							null);	
+				}
+				
 				gestionFichasEliminadas.addPiece(c.getPieza());
+			}
+			
+			if(m==null && (tablero.getCoordenadaOfCelda(c).getRow()==1||tablero.getCoordenadaOfCelda(c).getRow()==8) && piezaSeleccionada instanceof Pawn) {
+				m = new Movimiento(
+						piezaSeleccionada.getPosicion(),
+						tablero.getCoordenadaOfCelda(c),
+						Movimiento.RISE,
+						null,
+						null,
+						piezaSeleccionada);
+				
+			}else if(m==null) {
+				m = new Movimiento(
+						piezaSeleccionada.getPosicion(),
+						tablero.getCoordenadaOfCelda(c),
+						Movimiento.NOT_KILL,
+						null,
+						null,
+						null);
+			}
+			
+			dlm.addElement(m);
 			
 			piezaSeleccionada.moveTo(tablero.getCoordenadaOfCelda(c));
+			if(m.getTipoAccion()==Movimiento.RISE || m.getTipoAccion()==Movimiento.RISE_KILLING) {
+				m.setFichaGenerada(c.getPieza());
+			}
+			
+			piezaSeleccionada=null;
+			vista.getPanelTurno().getJLabelPieza().setIcon(null);
+			jpTurno.cambioTurno();
+			
 		}
 
 		
@@ -140,13 +194,14 @@ public class ControladorPrincipal implements ActionListener {
 
 		if (!c.contienePieza()) {
 			JOptionPane.showMessageDialog(vista, "Debes seleccionar una pieza", "Error", JOptionPane.ERROR_MESSAGE);
-		} else if (c.getPieza().getColor() != turno) {
+		} else if (c.getPieza().getColor() != jpTurno.getTurno()) {
 			JOptionPane.showMessageDialog(vista, "Debes seleccionar una pieza de tu color", "Error",
 					JOptionPane.ERROR_MESSAGE);
 		} else if (c.getPieza().getNextMovements().size() == 0) {
 			JOptionPane.showMessageDialog(vista, "Esa pieza no la puedes mover", "Error", JOptionPane.ERROR_MESSAGE);
 		} else {
 			piezaSeleccionada = c.getPieza();
+			vista.getPanelTurno().getJLabelPieza().setIcon(new ImageIcon(JPTurno.class.getResource("/es/ieslavereda/Chess/recursos/"+piezaSeleccionada.getFileName())));
 			marcarPosiblesDestinos();
 
 		}
@@ -174,9 +229,11 @@ public class ControladorPrincipal implements ActionListener {
 		for (Coordenada cord : posiblesMovimientos) {
 			Celda celda = tablero.getCeldaAt(cord);
 
-			celda.resaltar(null, 1);
+			celda.resaltar(java.awt.Color.GRAY, 1);
 
 		}
 
 	}
+	
+	
 }
