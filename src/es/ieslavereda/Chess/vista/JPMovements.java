@@ -11,11 +11,13 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 import javax.swing.AbstractListModel;
+import javax.swing.JScrollPane;
 
 public class JPMovements extends JPanel {
-	private JList list;
 	private JButton btnPrev;
 	private JButton btnNext;
+	private JScrollPane scrollPane;
+	private JList list;
 
 	/**
 	 * Create the panel.
@@ -24,8 +26,11 @@ public class JPMovements extends JPanel {
 		setBorder(new TitledBorder(null, "MOVEMENTS", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new MigLayout("", "[grow]", "[grow][]"));
 		
+		scrollPane = new JScrollPane();
+		add(scrollPane, "cell 0 0,grow");
+		
 		list = new JList();
-		add(list, "cell 0 0,grow");
+		scrollPane.setViewportView(list);
 		
 		JPanel panelBotones = new JPanel();
 		add(panelBotones, "cell 0 1,grow");
@@ -64,5 +69,4 @@ public class JPMovements extends JPanel {
 	public JButton getBtnNext() {
 		return btnNext;
 	}
-	
 }
