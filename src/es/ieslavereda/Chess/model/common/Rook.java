@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class Rook extends Pieza {
 
-	public Rook(Color color, Coordenada posicion, Tablero tablero) {
+	public Rook(Color color, Coordenada posicion, JPTablero tablero) {
 		super(posicion, tablero);
 		// TODO Auto-generated constructor stub
 		
@@ -26,7 +26,7 @@ public class Rook extends Pieza {
 	
 	public static Set<Coordenada> getNextMovements(Pieza p){
 		
-		Tablero t = p.tablero;
+		JPTablero t = p.tablero;
 		Set<Coordenada> posicionesCandidatas = new LinkedHashSet<Coordenada>();
 		Coordenada c;
 
@@ -62,7 +62,7 @@ public class Rook extends Pieza {
 		
 	}
 	private static void addCoordenada(Coordenada c, Set<Coordenada> posicionesCandidatas, Pieza p) {
-		Tablero t = p.tablero;
+		JPTablero t = p.tablero;
 		if (t.contiene(c)	&& (t.getCeldaAt(c).getPieza() == null || t.getCeldaAt(c).getPieza().getColor() != p.getColor()))
 			posicionesCandidatas.add(c);
 	}

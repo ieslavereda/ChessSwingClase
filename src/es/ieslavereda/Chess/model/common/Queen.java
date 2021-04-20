@@ -4,7 +4,7 @@ import java.util.Set;
 
 public class Queen extends Pieza{
 
-	public Queen(Color color, Coordenada posicion, Tablero tablero) {
+	public Queen(Color color, Coordenada posicion, JPTablero tablero) {
 		super(posicion, tablero);
 		
 		if(color==Color.WHITE)

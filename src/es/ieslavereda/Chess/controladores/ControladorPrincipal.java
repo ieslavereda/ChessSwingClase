@@ -3,6 +3,9 @@ package es.ieslavereda.Chess.controladores;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import javax.swing.DefaultListModel;
@@ -24,10 +27,13 @@ public class ControladorPrincipal implements ActionListener {
 	private Preferencias jfPreferencias;
 	private GestionFichasEliminadas gestionFichasEliminadas;
 	private DefaultListModel<Movimiento> dlm;
+	private Deque<Movimiento> stack;
 
 	public ControladorPrincipal(VistaPrincipal vista) {
 		super();
 		this.vista = vista;
+		
+		stack = new ArrayDeque<Movimiento>();
 
 		inicializar();
 	}
@@ -35,9 +41,9 @@ public class ControladorPrincipal implements ActionListener {
 	private void inicializar() {
 
 		gestionFichasEliminadas = new ControladorFichasEliminadas(vista.getPanelEliminados());
-				
+
 		jpTurno = vista.getPanelTurno();
-		
+
 		dlm = new DefaultListModel<Movimiento>();
 		vista.getPanelMovimientos().getList().setModel(dlm);
 
@@ -51,10 +57,13 @@ public class ControladorPrincipal implements ActionListener {
 
 		// Añadimos los ActionListener
 		vista.getMntmPreferences().addActionListener(this);
+		vista.getPanelMovimientos().getBtnPrev().addActionListener(this);
+		vista.getPanelMovimientos().getBtnNext().addActionListener(this);
 
 		// Añadimos los ActionCommand
 		vista.getMntmPreferences().setActionCommand("Abrir preferencias");
-
+		vista.getPanelMovimientos().getBtnPrev().setActionCommand("Previous movement");
+		vista.getPanelMovimientos().getBtnNext().setActionCommand("Next movement");
 	}
 
 	public void go() {
@@ -69,8 +78,53 @@ public class ControladorPrincipal implements ActionListener {
 			abrirPreferencias();
 		} else if (comando.equals("Cambiar Color Celda Blanca")) {
 			cambiarColorCeldaBlanca();
+		} else if (comando.equals("Previous movement")) {
+			previousMovement();
+		} else if (comando.equals("Next movement")) {
+			nextMovement();
 		} else if (arg0.getSource() instanceof Celda) {
 			comprobarMovimiento((Celda) arg0.getSource());
+		}
+
+	}
+
+	private void nextMovement() {
+		
+		
+		
+	}
+
+	private void previousMovement() {
+
+		try {
+			
+			Movimiento m = dlm.remove(dlm.getSize()-1);
+			stack.push(m);
+			
+			Coordenada origen,destino;
+			
+			switch(m.getTipoAccion()) {
+			case Movimiento.NOT_KILL:
+				
+				destino = m.getDestino();
+				origen = m.getOrigen();
+				
+				vista.getPanelTablero().getPiezaAt(destino).moveTo(origen);
+				
+				
+				break;
+			default: throw new Exception("Tipo no conocido");
+					
+			}
+			
+			Movimiento.decreaseNumberOfMovements();
+			vista.getPanelTurno().cambioTurno();
+			
+		} catch (ArrayIndexOutOfBoundsException ae) {
+			JOptionPane.showMessageDialog(vista, "No hay movimentos para deshacer", "Error", JOptionPane.ERROR_MESSAGE);
+		} catch (Exception e) {
+			
+			JOptionPane.showMessageDialog(vista,e.getMessage() , "Error", JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
@@ -84,7 +138,7 @@ public class ControladorPrincipal implements ActionListener {
 			jfPreferencias.getBtnColorCeldaBlanca().setBackground(color);
 			MyConfig.getInstancia().setWhiteCellColor(color);
 			Celda.colorCeldaBlanca = color;
-			((Tablero) vista.getPanelTablero()).repaintBoard();
+			vista.getPanelTablero().repaintBoard();
 		}
 
 	}
@@ -121,7 +175,7 @@ public class ControladorPrincipal implements ActionListener {
 
 	private void movimientoConPiezaSeleccionada(Celda c) {
 
-		Tablero tablero = (Tablero) vista.getPanelTablero();
+		JPTablero tablero =  vista.getPanelTablero();
 
 		if (!piezaSeleccionada.getNextMovements().contains(tablero.getCoordenadaOfCelda(c))) {
 			JOptionPane.showMessageDialog(vista, "No puedes mover la pieza a esa posicion", "Error",
@@ -129,65 +183,50 @@ public class ControladorPrincipal implements ActionListener {
 		} else {
 
 			Movimiento m = null;
-			
+
+			Coordenada origen = piezaSeleccionada.getPosicion();
+			Coordenada destino = tablero.getCoordenadaOfCelda(c);
+
 			desmarcarPosiblesDestinos();
-			
-			if(c.contienePieza()) {
-				if((tablero.getCoordenadaOfCelda(c).getRow()==1||tablero.getCoordenadaOfCelda(c).getRow()==8) && piezaSeleccionada instanceof Pawn) {
-					m = new Movimiento(
-							piezaSeleccionada.getPosicion(),
-							tablero.getCoordenadaOfCelda(c),
-							Movimiento.RISE_KILLING,
-							c.getPieza(),
-							null,
-							piezaSeleccionada);		
-					
-				}else {
-					m = new Movimiento(
-							piezaSeleccionada.getPosicion(),
-							tablero.getCoordenadaOfCelda(c),
-							Movimiento.KILL,
-							c.getPieza(),
-							null,
-							null);	
+
+			// Comprobamos si matamos pieza
+			if (c.contienePieza()) {
+				// Comprobamos si el peon se transforma en reina matando
+				if ((tablero.getCoordenadaOfCelda(c).getRow() == 1 || tablero.getCoordenadaOfCelda(c).getRow() == 8)
+						&& piezaSeleccionada instanceof Pawn) {
+					m = new Movimiento(origen, destino, Movimiento.RISE_KILLING, c.getPieza(), null, piezaSeleccionada);
+
+				} else {
+					m = new Movimiento(origen, destino, Movimiento.KILL, c.getPieza(), null, null);
 				}
-				
+
 				gestionFichasEliminadas.addPiece(c.getPieza());
 			}
-			
-			if(m==null && (tablero.getCoordenadaOfCelda(c).getRow()==1||tablero.getCoordenadaOfCelda(c).getRow()==8) && piezaSeleccionada instanceof Pawn) {
-				m = new Movimiento(
-						piezaSeleccionada.getPosicion(),
-						tablero.getCoordenadaOfCelda(c),
-						Movimiento.RISE,
-						null,
-						null,
-						piezaSeleccionada);
-				
-			}else if(m==null) {
-				m = new Movimiento(
-						piezaSeleccionada.getPosicion(),
-						tablero.getCoordenadaOfCelda(c),
-						Movimiento.NOT_KILL,
-						null,
-						null,
-						null);
+
+			// Si m==null no matamos en el movimiento
+			// Comprobamos si es un movimiento normal, o un peon que llega al final
+			if (m == null
+					&& (tablero.getCoordenadaOfCelda(c).getRow() == 1 || tablero.getCoordenadaOfCelda(c).getRow() == 8)
+					&& piezaSeleccionada instanceof Pawn) {
+				m = new Movimiento(origen, destino, Movimiento.RISE, null, null, piezaSeleccionada);
+
+			} else if (m == null) {
+				m = new Movimiento(origen, destino, Movimiento.NOT_KILL, null, null, null);
 			}
-			
+
 			dlm.addElement(m);
-			
+
 			piezaSeleccionada.moveTo(tablero.getCoordenadaOfCelda(c));
-			if(m.getTipoAccion()==Movimiento.RISE || m.getTipoAccion()==Movimiento.RISE_KILLING) {
+			if (m.getTipoAccion() == Movimiento.RISE || m.getTipoAccion() == Movimiento.RISE_KILLING) {
 				m.setFichaGenerada(c.getPieza());
 			}
-			
-			piezaSeleccionada=null;
+
+			piezaSeleccionada = null;
 			vista.getPanelTurno().getJLabelPieza().setIcon(null);
 			jpTurno.cambioTurno();
-			
+
 		}
 
-		
 	}
 
 	private void movimientoSinPiezaSeleccionada(Celda c) {
@@ -201,7 +240,8 @@ public class ControladorPrincipal implements ActionListener {
 			JOptionPane.showMessageDialog(vista, "Esa pieza no la puedes mover", "Error", JOptionPane.ERROR_MESSAGE);
 		} else {
 			piezaSeleccionada = c.getPieza();
-			vista.getPanelTurno().getJLabelPieza().setIcon(new ImageIcon(JPTurno.class.getResource("/es/ieslavereda/Chess/recursos/"+piezaSeleccionada.getFileName())));
+			vista.getPanelTurno().getJLabelPieza().setIcon(new ImageIcon(
+					JPTurno.class.getResource("/es/ieslavereda/Chess/recursos/" + piezaSeleccionada.getFileName())));
 			marcarPosiblesDestinos();
 
 		}
@@ -210,7 +250,7 @@ public class ControladorPrincipal implements ActionListener {
 
 	private void marcarPosiblesDestinos() {
 		Set<Coordenada> posiblesMovimientos = piezaSeleccionada.getNextMovements();
-		Tablero tablero = (Tablero) vista.getPanelTablero();
+		JPTablero tablero = vista.getPanelTablero();
 
 		for (Coordenada cord : posiblesMovimientos) {
 			Celda celda = tablero.getCeldaAt(cord);
@@ -224,7 +264,7 @@ public class ControladorPrincipal implements ActionListener {
 
 	private void desmarcarPosiblesDestinos() {
 		Set<Coordenada> posiblesMovimientos = piezaSeleccionada.getNextMovements();
-		Tablero tablero = (Tablero) vista.getPanelTablero();
+		JPTablero tablero =  vista.getPanelTablero();
 
 		for (Coordenada cord : posiblesMovimientos) {
 			Celda celda = tablero.getCeldaAt(cord);
@@ -234,6 +274,5 @@ public class ControladorPrincipal implements ActionListener {
 		}
 
 	}
-	
-	
+
 }

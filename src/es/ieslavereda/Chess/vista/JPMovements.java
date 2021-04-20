@@ -3,9 +3,7 @@ package es.ieslavereda.Chess.vista;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JList;
-import java.awt.FlowLayout;
 import javax.swing.JButton;
-import java.awt.BorderLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -13,7 +11,6 @@ import javax.swing.border.TitledBorder;
 
 import es.ieslavereda.Chess.model.common.Movimiento;
 
-import javax.swing.AbstractListModel;
 import javax.swing.JScrollPane;
 
 public class JPMovements extends JPanel {

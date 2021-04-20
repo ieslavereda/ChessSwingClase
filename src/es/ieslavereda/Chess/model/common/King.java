@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class King extends Pieza {
 
-	public King(Color color, Coordenada posicion, Tablero tablero) {
+	public King(Color color, Coordenada posicion, JPTablero tablero) {
 		super(posicion, tablero);
 		if (color == Color.WHITE)
 			tipo = Tipo.WHITE_KING;

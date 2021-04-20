@@ -17,14 +17,14 @@ import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
-import es.ieslavereda.Chess.model.common.Tablero;
+import es.ieslavereda.Chess.model.common.JPTablero;
 
 import java.awt.Color;
 
 public class VistaPrincipal extends JFrame {
 
 	private JPanel contentPane;
-	private JPanel panelTablero;
+	private JPTablero panelTablero;
 	private JPFichasEliminadas panelEliminados;
 	private JPTurno panelTurno;
 	private JPMovements panelMovimientos;
@@ -72,7 +72,7 @@ public class VistaPrincipal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		panelTablero = new Tablero();
+		panelTablero = new JPTablero();
 		
 		panelEliminados = new JPFichasEliminadas();
 		
@@ -111,7 +111,7 @@ public class VistaPrincipal extends JFrame {
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
-	public JPanel getPanelTablero() {
+	public JPTablero getPanelTablero() {
 		return panelTablero;
 	}
 	public JMenuItem getMntmPreferences() {

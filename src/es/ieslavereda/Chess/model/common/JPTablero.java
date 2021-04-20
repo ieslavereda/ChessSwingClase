@@ -12,7 +12,7 @@ import javax.swing.SwingConstants;
 import java.awt.Rectangle;
 import java.awt.GridLayout;
 
-public class Tablero extends JPanel {
+public class JPTablero extends JPanel {
 
 	private HashMap<Coordenada, Celda> tablero;
 	private ArrayList<Pieza> blancas;
@@ -22,7 +22,7 @@ public class Tablero extends JPanel {
 	private Pieza blackKing;
 	private Pieza whiteKing;
 
-	public Tablero() {
+	public JPTablero() {
 		super();
 		setBounds(new Rectangle(0, 0, 500, 500));
 		setLayout(new GridLayout(10, 10, 0, 0));

@@ -6,7 +6,7 @@ import java.util.Set;
 public class Knight extends Pieza{
 
 	private Set<Coordenada> posicionesCandidatas;
-	public Knight(Color color, Coordenada posicion, Tablero tablero) {
+	public Knight(Color color, Coordenada posicion, JPTablero tablero) {
 		super(posicion, tablero);
 		
 		if(color==Color.WHITE)

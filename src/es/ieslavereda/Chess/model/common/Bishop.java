@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class Bishop extends Pieza {
 
-	public Bishop(Color color, Coordenada posicion, Tablero tablero) {
+	public Bishop(Color color, Coordenada posicion, JPTablero tablero) {
 		super(posicion, tablero);
 
 		if (color == Color.WHITE)
@@ -25,7 +25,7 @@ public class Bishop extends Pieza {
 
 	public static Set<Coordenada> getNextMovements(Pieza p) {
 
-		Tablero t = p.tablero;
+		JPTablero t = p.tablero;
 		Set<Coordenada> posicionesCandidatas = new LinkedHashSet<Coordenada>();
 		Coordenada c;
 
@@ -64,7 +64,7 @@ public class Bishop extends Pieza {
 		return posicionesCandidatas;
 	}
 	private static void addCelda(Coordenada c, Set<Coordenada> posicionesCandidatas, Pieza p) {
-		Tablero t = p.tablero;
+		JPTablero t = p.tablero;
 		if (t.contiene(c)	&& (t.getCeldaAt(c).getPieza() == null || t.getCeldaAt(c).getPieza().getColor() != p.getColor()))
 			posicionesCandidatas.add(c);
 	}
