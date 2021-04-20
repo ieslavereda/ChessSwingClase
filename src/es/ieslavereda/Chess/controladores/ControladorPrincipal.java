@@ -32,7 +32,7 @@ public class ControladorPrincipal implements ActionListener {
 	public ControladorPrincipal(VistaPrincipal vista) {
 		super();
 		this.vista = vista;
-		
+
 		stack = new ArrayDeque<Movimiento>();
 
 		inicializar();
@@ -89,42 +89,79 @@ public class ControladorPrincipal implements ActionListener {
 	}
 
 	private void nextMovement() {
-		
-		
-		
+
+		try {
+			Movimiento m = stack.pop();
+			dlm.addElement(m);
+			Coordenada origen, destino;
+
+			origen = m.getOrigen();
+			destino = m.getDestino();
+
+			switch (m.getTipoAccion()) {
+			case Movimiento.NOT_KILL:
+
+				vista.getPanelTablero().getPiezaAt(origen).moveTo(destino);
+
+				break;
+			default:
+				throw new Exception("Error interno. Movimento desconocido");
+			}
+
+			vista.getPanelTurno().cambioTurno();
+			Movimiento.increaseNumberOfMovements();
+
+		} catch (NoSuchElementException ne) {
+			JOptionPane.showMessageDialog(vista, "No hay movimientos para avanzar", "Error", JOptionPane.ERROR_MESSAGE);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(vista, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+
 	}
 
 	private void previousMovement() {
 
 		try {
-			
-			Movimiento m = dlm.remove(dlm.getSize()-1);
+
+			Movimiento m = dlm.remove(dlm.getSize() - 1);
 			stack.push(m);
-			
-			Coordenada origen,destino;
-			
-			switch(m.getTipoAccion()) {
+
+			Coordenada origen, destino;
+			destino = m.getDestino();
+			origen = m.getOrigen();
+
+			switch (m.getTipoAccion()) {
 			case Movimiento.NOT_KILL:
-				
-				destino = m.getDestino();
-				origen = m.getOrigen();
-				
+
 				vista.getPanelTablero().getPiezaAt(destino).moveTo(origen);
-				
-				
+
 				break;
-			default: throw new Exception("Tipo no conocido");
-					
+
+			case Movimiento.KILL:
+
+				vista.getPanelTablero().getPiezaAt(destino).moveTo(origen);
+				vista.getPanelTablero().getCeldaAt(destino).setPieza(m.getFicha());
+				gestionFichasEliminadas.removePiece(m.getFicha());
+				
+				if (m.getFicha().getColor() == Color.WHITE)
+					vista.getPanelTablero().getBlancas().add(m.getFicha());
+				else
+					vista.getPanelTablero().getNegras().add(m.getFicha());
+
+				break;
+			default:
+				throw new Exception("Tipo no conocido");
+
 			}
-			
+
 			Movimiento.decreaseNumberOfMovements();
 			vista.getPanelTurno().cambioTurno();
-			
+
 		} catch (ArrayIndexOutOfBoundsException ae) {
 			JOptionPane.showMessageDialog(vista, "No hay movimentos para deshacer", "Error", JOptionPane.ERROR_MESSAGE);
 		} catch (Exception e) {
-			
-			JOptionPane.showMessageDialog(vista,e.getMessage() , "Error", JOptionPane.ERROR_MESSAGE);
+
+			JOptionPane.showMessageDialog(vista, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
@@ -175,7 +212,7 @@ public class ControladorPrincipal implements ActionListener {
 
 	private void movimientoConPiezaSeleccionada(Celda c) {
 
-		JPTablero tablero =  vista.getPanelTablero();
+		JPTablero tablero = vista.getPanelTablero();
 
 		if (!piezaSeleccionada.getNextMovements().contains(tablero.getCoordenadaOfCelda(c))) {
 			JOptionPane.showMessageDialog(vista, "No puedes mover la pieza a esa posicion", "Error",
@@ -264,7 +301,7 @@ public class ControladorPrincipal implements ActionListener {
 
 	private void desmarcarPosiblesDestinos() {
 		Set<Coordenada> posiblesMovimientos = piezaSeleccionada.getNextMovements();
-		JPTablero tablero =  vista.getPanelTablero();
+		JPTablero tablero = vista.getPanelTablero();
 
 		for (Coordenada cord : posiblesMovimientos) {
 			Celda celda = tablero.getCeldaAt(cord);

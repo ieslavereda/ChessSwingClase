@@ -16,9 +16,7 @@ public class JPTablero extends JPanel {
 
 	private HashMap<Coordenada, Celda> tablero;
 	private ArrayList<Pieza> blancas;
-	private ArrayList<Pieza> blancasEliminadas;
 	private ArrayList<Pieza> negras;
-	private ArrayList<Pieza> negrasEliminadas;
 	private Pieza blackKing;
 	private Pieza whiteKing;
 
@@ -28,10 +26,8 @@ public class JPTablero extends JPanel {
 		setLayout(new GridLayout(10, 10, 0, 0));
 
 		tablero = new HashMap<Coordenada, Celda>();
-		blancas = new ArrayList<>();
-		blancasEliminadas = new ArrayList<>();
+		blancas = new ArrayList<>();		
 		negras = new ArrayList<>();
-		negrasEliminadas = new ArrayList<>();
 
 		inicializar();
 	}
@@ -169,11 +165,10 @@ public class JPTablero extends JPanel {
 
 	public void eliminarPieza(Pieza p) {
 
-		if (p.getColor() == Color.WHITE) {
-			
-			blancasEliminadas.add(blancas.remove(blancas.indexOf(p)));
+		if (p.getColor() == Color.WHITE) {			
+			blancas.remove(blancas.indexOf(p));
 		} else
-			negrasEliminadas.add(negras.remove(negras.indexOf(p)));
+			negras.remove(negras.indexOf(p));
 
 	}
 

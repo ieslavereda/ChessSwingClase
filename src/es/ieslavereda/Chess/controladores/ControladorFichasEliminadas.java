@@ -30,10 +30,8 @@ public class ControladorFichasEliminadas implements GestionFichasEliminadas {
 	@Override
 	public void addPiece(Pieza ficha) {
 		
-		if(ficha.getColor()==Color.WHITE) {
-			
-			add(ficha,vista.getPanelBlancas());
-			
+		if(ficha.getColor()==Color.WHITE) {			
+			add(ficha,vista.getPanelBlancas());			
 		}else {
 			add(ficha,vista.getPanelNegras());
 		}
@@ -42,8 +40,16 @@ public class ControladorFichasEliminadas implements GestionFichasEliminadas {
 
 	@Override
 	public void removePiece(Pieza ficha) {
-		// TODO Auto-generated method stub
 		
+		JLabel label = fichasEliminadas.get(ficha);
+		
+		if(ficha.getColor()==Color.WHITE) {			
+			vista.getPanelBlancas().remove(label);	
+			vista.getPanelBlancas().repaint();
+		}else {
+			vista.getPanelNegras().remove(label);
+			vista.getPanelNegras().repaint();
+		}		
 	}
 	
 	private void add(Pieza ficha, JPanel panel) {
