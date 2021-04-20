@@ -104,6 +104,12 @@ public class ControladorPrincipal implements ActionListener {
 				vista.getPanelTablero().getPiezaAt(origen).moveTo(destino);
 
 				break;
+
+			case Movimiento.KILL:
+
+				vista.getPanelTablero().getPiezaAt(origen).moveTo(destino);
+				gestionFichasEliminadas.addPiece(m.getFicha());
+				break;
 			default:
 				throw new Exception("Error interno. Movimento desconocido");
 			}
@@ -114,6 +120,7 @@ public class ControladorPrincipal implements ActionListener {
 		} catch (NoSuchElementException ne) {
 			JOptionPane.showMessageDialog(vista, "No hay movimientos para avanzar", "Error", JOptionPane.ERROR_MESSAGE);
 		} catch (Exception e) {
+			e.printStackTrace();
 			JOptionPane.showMessageDialog(vista, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 
@@ -142,7 +149,7 @@ public class ControladorPrincipal implements ActionListener {
 				vista.getPanelTablero().getPiezaAt(destino).moveTo(origen);
 				vista.getPanelTablero().getCeldaAt(destino).setPieza(m.getFicha());
 				gestionFichasEliminadas.removePiece(m.getFicha());
-				
+
 				if (m.getFicha().getColor() == Color.WHITE)
 					vista.getPanelTablero().getBlancas().add(m.getFicha());
 				else
