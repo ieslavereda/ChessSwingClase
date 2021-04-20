@@ -28,6 +28,8 @@ public class Movimiento implements Serializable {
 		this.fichaGenerada = fichaGenerada;
 		this.fichaPeon = fichaPeon;
 		numeroMovimiento = numero++;
+		
+		System.out.println("Mov " + numeroMovimiento + " -> " + tipoAccion);
 	}
 
 	public static void restartNumberOfMovements() {

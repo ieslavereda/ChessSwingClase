@@ -10,6 +10,9 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
+
+import es.ieslavereda.Chess.model.common.Movimiento;
+
 import javax.swing.AbstractListModel;
 import javax.swing.JScrollPane;
 
@@ -17,7 +20,7 @@ public class JPMovements extends JPanel {
 	private JButton btnPrev;
 	private JButton btnNext;
 	private JScrollPane scrollPane;
-	private JList list;
+	private JList<Movimiento> list;
 
 	/**
 	 * Create the panel.
@@ -29,7 +32,7 @@ public class JPMovements extends JPanel {
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 0,grow");
 		
-		list = new JList();
+		list = new JList<Movimiento>();
 		scrollPane.setViewportView(list);
 		
 		JPanel panelBotones = new JPanel();
@@ -58,7 +61,7 @@ public class JPMovements extends JPanel {
 
 	}
 
-	public JList getList() {
+	public JList<Movimiento> getList() {
 		return list;
 	}
 

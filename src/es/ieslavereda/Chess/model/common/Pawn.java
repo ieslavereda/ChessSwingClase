@@ -23,8 +23,9 @@ public class Pawn extends Pieza {
 		if(getColor()==Color.WHITE && posicion.getRow()==8) {
 			tablero.eliminarPieza(this);
 			tablero.getBlancas().add(new Queen(Color.WHITE,c,tablero));
-		} else if (getColor()==Color.BLACK && posicion.getRow()==8){
-			
+		} else if (getColor()==Color.BLACK && posicion.getRow()==1){
+			tablero.eliminarPieza(this);
+			tablero.getNegras().add(new Queen(Color.BLACK,c,tablero));
 		}		
 	}
 	
@@ -33,13 +34,9 @@ public class Pawn extends Pieza {
 		
 		// Comprobamos el color de la ficha para ver el sentido
 		if (getColor() == Color.BLACK) {
-
 			return movementsAsPawnBlack();
-
 		} else {
-
 			return movementsAsPawnWhite();
-
 		}
 	}
 

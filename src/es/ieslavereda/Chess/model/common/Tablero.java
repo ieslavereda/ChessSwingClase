@@ -161,6 +161,11 @@ public class Tablero extends JPanel {
 	public ArrayList<Pieza> getBlancas() {
 		return blancas;
 	}
+	
+
+	public ArrayList<Pieza> getNegras() {
+		return negras;
+	}
 
 	public void eliminarPieza(Pieza p) {
 
