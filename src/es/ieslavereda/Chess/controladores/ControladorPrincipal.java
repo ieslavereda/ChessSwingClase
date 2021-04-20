@@ -3,6 +3,8 @@ package es.ieslavereda.Chess.controladores;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.NoSuchElementException;
@@ -19,7 +21,7 @@ import es.ieslavereda.Chess.vista.Preferencias;
 import es.ieslavereda.Chess.vista.VistaPrincipal;
 import es.ieslavereda.Chess.model.common.*;
 
-public class ControladorPrincipal implements ActionListener {
+public class ControladorPrincipal implements ActionListener,MouseListener {
 
 	private VistaPrincipal vista;
 	private JPTurno jpTurno;
@@ -55,6 +57,9 @@ public class ControladorPrincipal implements ActionListener {
 			}
 		}
 
+		// Añadimos los MouseListener
+		vista.getPanelMovimientos().getList().addMouseListener(this);
+		
 		// Añadimos los ActionListener
 		vista.getMntmPreferences().addActionListener(this);
 		vista.getPanelMovimientos().getBtnPrev().addActionListener(this);
@@ -317,6 +322,45 @@ public class ControladorPrincipal implements ActionListener {
 
 		}
 
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		
+		Component c = arg0.getComponent();
+		if(c == vista.getPanelMovimientos().getList()) {
+			int index = vista.getPanelMovimientos().getList().getSelectedIndex();
+			
+			while (dlm.getSize() > index) {
+				previousMovement();
+			}
+
+		}
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
