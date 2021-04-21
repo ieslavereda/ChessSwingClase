@@ -107,13 +107,14 @@ public class ControladorPrincipal implements ActionListener,MouseListener {
 			switch (m.getTipoAccion()) {
 			case Movimiento.NOT_KILL:
 
+				tablero.getPiezaAt(origen).setPosicion(destino);
 				tablero.getCeldaAt(destino).setPieza(tablero.getPiezaAt(origen));
 				tablero.getCeldaAt(origen).setPieza(null);
 				
 				break;
 
 			case Movimiento.KILL:
-
+				tablero.getPiezaAt(origen).setPosicion(destino);
 				tablero.getCeldaAt(destino).setPieza(tablero.getPiezaAt(origen));
 				tablero.getCeldaAt(origen).setPieza(null);
 				
@@ -158,6 +159,7 @@ public class ControladorPrincipal implements ActionListener,MouseListener {
 			case Movimiento.NOT_KILL:
 
 				//vista.getPanelTablero().getPiezaAt(destino).moveTo(origen);
+				tablero.getCeldaAt(destino).getPieza().setPosicion(origen);
 				tablero.getCeldaAt(origen).setPieza(tablero.getCeldaAt(destino).getPieza());
 				tablero.getCeldaAt(destino).setPieza(null);
 				
@@ -165,6 +167,8 @@ public class ControladorPrincipal implements ActionListener,MouseListener {
 
 			case Movimiento.KILL:
 				
+				tablero.getCeldaAt(destino).getPieza().setPosicion(origen);
+				m.getFicha().setPosicion(destino);
 				tablero.getCeldaAt(origen).setPieza(tablero.getCeldaAt(destino).getPieza());
 				tablero.getCeldaAt(destino).setPieza(m.getFicha());
 				

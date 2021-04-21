@@ -54,6 +54,11 @@ public abstract class Pieza {
 		return tipo.getFileName();
 	}
 	
+	
+	public void setPosicion(Coordenada posicion) {
+		this.posicion = posicion;
+	}
+
 	public abstract Set<Coordenada> getNextMovements();
 }
 
