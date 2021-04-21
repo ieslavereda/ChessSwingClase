@@ -98,6 +98,7 @@ public class ControladorPrincipal implements ActionListener,MouseListener {
 		try {
 			Movimiento m = stack.pop();
 			dlm.addElement(m);
+			JPTablero tablero = vista.getPanelTablero();
 			Coordenada origen, destino;
 
 			origen = m.getOrigen();
@@ -106,14 +107,24 @@ public class ControladorPrincipal implements ActionListener,MouseListener {
 			switch (m.getTipoAccion()) {
 			case Movimiento.NOT_KILL:
 
-				vista.getPanelTablero().getPiezaAt(origen).moveTo(destino);
-
+				tablero.getCeldaAt(destino).setPieza(tablero.getPiezaAt(origen));
+				tablero.getCeldaAt(origen).setPieza(null);
+				
 				break;
 
 			case Movimiento.KILL:
 
-				vista.getPanelTablero().getPiezaAt(origen).moveTo(destino);
+				tablero.getCeldaAt(destino).setPieza(tablero.getPiezaAt(origen));
+				tablero.getCeldaAt(origen).setPieza(null);
+				
+				if(m.getFicha().getColor()==Color.WHITE) {
+					tablero.getBlancas().remove(m.getFicha());
+				}else {
+					tablero.getNegras().remove(m.getFicha());
+				}
+				
 				gestionFichasEliminadas.addPiece(m.getFicha());
+				
 				break;
 			default:
 				throw new Exception("Error interno. Movimento desconocido");
@@ -137,6 +148,7 @@ public class ControladorPrincipal implements ActionListener,MouseListener {
 
 			Movimiento m = dlm.remove(dlm.getSize() - 1);
 			stack.push(m);
+			JPTablero tablero = vista.getPanelTablero();
 
 			Coordenada origen, destino;
 			destino = m.getDestino();
@@ -145,14 +157,17 @@ public class ControladorPrincipal implements ActionListener,MouseListener {
 			switch (m.getTipoAccion()) {
 			case Movimiento.NOT_KILL:
 
-				vista.getPanelTablero().getPiezaAt(destino).moveTo(origen);
-
+				//vista.getPanelTablero().getPiezaAt(destino).moveTo(origen);
+				tablero.getCeldaAt(origen).setPieza(tablero.getCeldaAt(destino).getPieza());
+				tablero.getCeldaAt(destino).setPieza(null);
+				
 				break;
 
 			case Movimiento.KILL:
-
-				vista.getPanelTablero().getPiezaAt(destino).moveTo(origen);
-				vista.getPanelTablero().getCeldaAt(destino).setPieza(m.getFicha());
+				
+				tablero.getCeldaAt(origen).setPieza(tablero.getCeldaAt(destino).getPieza());
+				tablero.getCeldaAt(destino).setPieza(m.getFicha());
+				
 				gestionFichasEliminadas.removePiece(m.getFicha());
 
 				if (m.getFicha().getColor() == Color.WHITE)
