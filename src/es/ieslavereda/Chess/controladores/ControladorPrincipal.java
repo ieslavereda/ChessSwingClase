@@ -14,6 +14,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 import es.ieslavereda.Chess.config.MyConfig;
 import es.ieslavereda.Chess.vista.JPTurno;
@@ -337,7 +338,7 @@ public class ControladorPrincipal implements ActionListener,MouseListener {
 		for (Coordenada cord : posiblesMovimientos) {
 			Celda celda = tablero.getCeldaAt(cord);
 
-			celda.resaltar(java.awt.Color.GRAY, 1);
+			celda.setBorder(UIManager.getBorder("Button.border"));
 
 		}
 
