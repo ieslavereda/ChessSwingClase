@@ -3,6 +3,8 @@ package es.ieslavereda.Chess;
 import java.awt.EventQueue;
 
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 import com.alee.laf.WebLookAndFeel;
 import com.alee.managers.style.StyleManager;
@@ -24,7 +26,7 @@ public class App {
 					// Install WebLaF as application LaF
 	                WebLookAndFeel.install();
 	                
-	                StyleManager.setSkin(MySkin.class);
+	                StyleManager.setSkin(MySkin.class);					
 					
 					MyConfig.getInstancia();
 					
@@ -36,6 +38,7 @@ public class App {
 					
 					// Creamos el controlador pasando vista y modelo
 					ControladorPrincipal c = new ControladorPrincipal(frame);
+						
 					
 					// Arrancamos la aplicacion
 					c.go();

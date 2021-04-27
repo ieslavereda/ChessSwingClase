@@ -22,7 +22,7 @@ public class Knight extends Pieza{
 
 	@Override
 	public Set<Coordenada> getNextMovements() {
-		Set<Coordenada> posicionesCandidatas = new LinkedHashSet<Coordenada>();
+		posicionesCandidatas = new LinkedHashSet<Coordenada>();
 
 		// Comprobamos que la ficha este en el tablero
 		if (posicion == null)
