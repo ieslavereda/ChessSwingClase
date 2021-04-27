@@ -11,9 +11,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
+import com.alee.laf.button.WebButton;
+import com.alee.managers.style.StyleId;
+
 import es.ieslavereda.Chess.config.MyConfig;
 
-public class Celda extends JButton implements Serializable {
+public class Celda extends WebButton implements Serializable {
 
 	private Pieza pieza;
 
@@ -25,7 +28,8 @@ public class Celda extends JButton implements Serializable {
 	public static java.awt.Color colorBordeCeldaComer = new java.awt.Color(MyConfig.getInstancia().getBorderKillCell());
 
 	public Celda() {
-		super();
+		super(StyleId.of("color"),"");
+		
 		pieza = null;
 		
 		setPreferredSize(dimension);

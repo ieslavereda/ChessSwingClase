@@ -17,9 +17,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
-import es.ieslavereda.Chess.model.common.JPTablero;
-
 import java.awt.Color;
+import java.awt.Dimension;
 
 public class VistaPrincipal extends JFrame {
 
@@ -35,7 +34,7 @@ public class VistaPrincipal extends JFrame {
 	public VistaPrincipal() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 775, 448);
+		setBounds(100, 100, 741, 469);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -75,6 +74,7 @@ public class VistaPrincipal extends JFrame {
 		panelTablero = new JPTablero();
 		
 		panelEliminados = new JPFichasEliminadas();
+		panelEliminados.getPanelBlancas().setMaximumSize(new Dimension(190, 32767));
 		
 		panelTurno = new JPTurno();
 		
@@ -85,29 +85,29 @@ public class VistaPrincipal extends JFrame {
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panelTablero, GroupLayout.PREFERRED_SIZE, 416, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panelTablero, GroupLayout.PREFERRED_SIZE, 434, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(panelEliminados, GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(panelTurno, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
+							.addComponent(panelTurno, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panelMovimientos, GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)))
-					.addContainerGap())
+							.addComponent(panelMovimientos, GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE))
+						.addComponent(panelEliminados, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap(60, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(panelTablero, GroupLayout.PREFERRED_SIZE, 399, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(panelMovimientos, GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-								.addComponent(panelTurno, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addComponent(panelMovimientos, GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+								.addComponent(panelTurno, GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panelEliminados, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE))
-						.addComponent(panelTablero, GroupLayout.PREFERRED_SIZE, 371, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(61, Short.MAX_VALUE))
+							.addComponent(panelEliminados, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
 		);
 		contentPane.setLayout(gl_contentPane);
 	}

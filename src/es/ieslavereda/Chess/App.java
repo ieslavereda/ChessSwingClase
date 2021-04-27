@@ -2,8 +2,14 @@ package es.ieslavereda.Chess;
 
 import java.awt.EventQueue;
 
+import javax.swing.SwingUtilities;
+
+import com.alee.laf.WebLookAndFeel;
+import com.alee.managers.style.StyleManager;
+
 import es.ieslavereda.Chess.config.MyConfig;
 import es.ieslavereda.Chess.controladores.ControladorPrincipal;
+import es.ieslavereda.Chess.vista.MySkin;
 import es.ieslavereda.Chess.vista.VistaPrincipal;
 
 public class App {
@@ -14,6 +20,12 @@ public class App {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					
+					// Install WebLaF as application LaF
+	                WebLookAndFeel.install();
+	                
+	                StyleManager.setSkin(MySkin.class);
+					
 					MyConfig.getInstancia();
 					
 					// Creamos la vista

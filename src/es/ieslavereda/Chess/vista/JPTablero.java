@@ -1,4 +1,4 @@
-package es.ieslavereda.Chess.model.common;
+package es.ieslavereda.Chess.vista;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +8,17 @@ import java.util.Set;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import es.ieslavereda.Chess.model.common.Bishop;
+import es.ieslavereda.Chess.model.common.Celda;
+import es.ieslavereda.Chess.model.common.Color;
+import es.ieslavereda.Chess.model.common.Coordenada;
+import es.ieslavereda.Chess.model.common.King;
+import es.ieslavereda.Chess.model.common.Knight;
+import es.ieslavereda.Chess.model.common.Pawn;
+import es.ieslavereda.Chess.model.common.Pieza;
+import es.ieslavereda.Chess.model.common.Queen;
+import es.ieslavereda.Chess.model.common.Rook;
 
 import java.awt.Rectangle;
 import java.awt.GridLayout;
@@ -88,8 +99,10 @@ public class JPTablero extends JPanel {
 				Celda celda = tablero.get(c);
 				if ((fil + col) % 2 == 0)
 					celda.setAsWhiteCell();
+					//celda.putClientProperty("styleId", "white-cell");
 				else
 					celda.setAsBlackCell();
+					//celda.putClientProperty("styleId", "black-cell");
 
 				add(celda);
 			}

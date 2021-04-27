@@ -16,7 +16,10 @@ import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
+import com.alee.managers.style.StyleId;
+
 import es.ieslavereda.Chess.config.MyConfig;
+import es.ieslavereda.Chess.vista.JPTablero;
 import es.ieslavereda.Chess.vista.JPTurno;
 import es.ieslavereda.Chess.vista.Preferencias;
 import es.ieslavereda.Chess.vista.VistaPrincipal;
@@ -84,6 +87,8 @@ public class ControladorPrincipal implements ActionListener,MouseListener {
 			abrirPreferencias();
 		} else if (comando.equals("Cambiar Color Celda Blanca")) {
 			cambiarColorCeldaBlanca();
+		} else if (comando.equals("Cambiar Color Celda Negra")) {
+			cambiarColorCeldaNegra();
 		} else if (comando.equals("Previous movement")) {
 			previousMovement();
 		} else if (comando.equals("Next movement")) {
@@ -93,6 +98,8 @@ public class ControladorPrincipal implements ActionListener,MouseListener {
 		}
 
 	}
+
+
 
 	private void nextMovement() {
 
@@ -205,13 +212,27 @@ public class ControladorPrincipal implements ActionListener,MouseListener {
 
 		if (color != null) {
 			jfPreferencias.getBtnColorCeldaBlanca().setBackground(color);
+			jfPreferencias.getBtnColorCeldaBlanca().repaint();
 			MyConfig.getInstancia().setWhiteCellColor(color);
 			Celda.colorCeldaBlanca = color;
 			vista.getPanelTablero().repaintBoard();
 		}
 
 	}
+	private void cambiarColorCeldaNegra() {
+		
+		java.awt.Color color = JColorChooser.showDialog(jfPreferencias.getBtnColorCeldaBlanca(),
+				"Selecciona color de las celdas blancas", jfPreferencias.getBtnColorCeldaBlanca().getBackground());
 
+		if (color != null) {
+			jfPreferencias.getBtnColorCeldaNegra().setBackground(color);
+			jfPreferencias.getBtnColorCeldaNegra().repaint();
+			MyConfig.getInstancia().setBlackCellColor(color);
+			Celda.colorCeldaNegra = color;
+			vista.getPanelTablero().repaintBoard();
+		}
+		
+	}
 	private void abrirPreferencias() {
 
 		jfPreferencias = new Preferencias();

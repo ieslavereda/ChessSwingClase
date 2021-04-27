@@ -55,7 +55,7 @@ public class ControladorFichasEliminadas implements GestionFichasEliminadas {
 	private void add(Pieza ficha, JPanel panel) {
 
 		JLabel label = new JLabel();
-		label.setOpaque(true);
+		//label.setOpaque(true);
 		
 		Image image = (new ImageIcon(Celda.class.getResource("/es/ieslavereda/Chess/recursos/" + ficha.getFileName())).getImage());
 		ImageIcon imageIconResized = new ImageIcon(getScaledImage(image,25));

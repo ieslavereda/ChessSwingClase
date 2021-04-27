@@ -51,6 +51,10 @@ public class MyConfig {
 		properties.setProperty("color_celda_blanca", String.valueOf(color.getRGB()));
 		guardar();
 	}
+	public void setBlackCellColor(Color color) {
+		properties.setProperty("color_celda_negra", String.valueOf(color.getRGB()));
+		guardar();
+	}
 	
 	public int getBlackCellColor() {
 		return Integer.parseInt(properties.getProperty("color_celda_negra"));

@@ -3,6 +3,8 @@ package es.ieslavereda.Chess.model.common;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import es.ieslavereda.Chess.vista.JPTablero;
+
 public class Knight extends Pieza{
 
 	private Set<Coordenada> posicionesCandidatas;

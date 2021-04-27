@@ -3,6 +3,8 @@ package es.ieslavereda.Chess.model.common;
 import java.util.HashSet;
 import java.util.Set;
 
+import es.ieslavereda.Chess.vista.JPTablero;
+
 public class King extends Pieza {
 
 	public King(Color color, Coordenada posicion, JPTablero tablero) {

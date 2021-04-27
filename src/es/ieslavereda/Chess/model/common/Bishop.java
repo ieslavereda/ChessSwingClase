@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import es.ieslavereda.Chess.vista.JPTablero;
+
 public class Bishop extends Pieza {
 
 	public Bishop(Color color, Coordenada posicion, JPTablero tablero) {

@@ -18,29 +18,28 @@ public class JPTurno extends JPanel {
 	private JLabel lblSelected;
 	
 	public JPTurno() {
-		setBorder(new TitledBorder(null, "TURN", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		setLayout(new GridLayout(2, 0, 0, 0));
 		
-		JPanel panelTurn = new JPanel();
-		add(panelTurn);
-		panelTurn.setLayout(new MigLayout("", "[grow,center]", "[][grow,center]"));
+		// Put properties for weblaf
+		this.putClientProperty("styleId", "shadow");
+				
+		
+		
+		
+		
+		setLayout(new MigLayout("", "[grow,center]", "[][50px,center][][50px]"));
 		
 		JLabel lblNewLabel = new JLabel("Move");
-		panelTurn.add(lblNewLabel, "cell 0 0,alignx center,aligny center");
+		add(lblNewLabel, "cell 0 0,alignx center,aligny center");
 		
 		lblTurn = new JLabel("");
 		lblTurn.setIcon(new ImageIcon(JPTurno.class.getResource("/es/ieslavereda/Chess/recursos/b_peon.gif")));
-		panelTurn.add(lblTurn, "cell 0 1,alignx center,aligny center");
-		
-		JPanel panelSelected = new JPanel();
-		add(panelSelected);
-		panelSelected.setLayout(new MigLayout("", "[grow,center]", "[][grow,center]"));
+		add(lblTurn, "cell 0 1,alignx center,aligny center");
 		
 		JLabel lblMove = new JLabel("Selected");
-		panelSelected.add(lblMove, "cell 0 0,alignx center,aligny center");
+		add(lblMove, "cell 0 2");
 		
 		lblSelected = new JLabel("");
-		panelSelected.add(lblSelected, "cell 0 1,alignx center,aligny center");
+		add(lblSelected, "cell 0 3");
 		turno = Color.WHITE;
 		
 		

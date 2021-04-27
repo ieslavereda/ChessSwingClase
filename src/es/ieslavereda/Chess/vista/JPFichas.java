@@ -6,9 +6,11 @@ import javax.swing.border.TitledBorder;
 
 public class JPFichas extends JPanel {
 
-	
 	public JPFichas(String titulo) {
-		setBorder(new TitledBorder(null, titulo, TitledBorder.LEADING, TitledBorder.TOP, null, null));
+
+		// Put properties for weblaf
+		this.putClientProperty("styleId", "shadow");
+
 		setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
 	}

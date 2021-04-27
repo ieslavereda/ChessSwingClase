@@ -23,37 +23,31 @@ public class JPMovements extends JPanel {
 	 * Create the panel.
 	 */
 	public JPMovements() {
-		setBorder(new TitledBorder(null, "MOVEMENTS", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		// Put properties for weblaf
+		this.putClientProperty("styleId", "shadow");
 		setLayout(new MigLayout("", "[grow]", "[grow][]"));
-		
+
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 0,grow");
-		
+
 		list = new JList<Movimiento>();
 		scrollPane.setViewportView(list);
-		
+
 		JPanel panelBotones = new JPanel();
 		add(panelBotones, "cell 0 1,grow");
-		
+
 		btnPrev = new JButton("<");
-		
+
 		btnNext = new JButton(">");
 		GroupLayout gl_panelBotones = new GroupLayout(panelBotones);
-		gl_panelBotones.setHorizontalGroup(
-			gl_panelBotones.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelBotones.createSequentialGroup()
-					.addComponent(btnPrev)
-					.addPreferredGap(ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
-					.addComponent(btnNext))
-		);
-		gl_panelBotones.setVerticalGroup(
-			gl_panelBotones.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelBotones.createSequentialGroup()
-					.addGroup(gl_panelBotones.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnPrev)
-						.addComponent(btnNext))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
+		gl_panelBotones.setHorizontalGroup(gl_panelBotones.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelBotones.createSequentialGroup().addComponent(btnPrev)
+						.addPreferredGap(ComponentPlacement.RELATED, 154, Short.MAX_VALUE).addComponent(btnNext)));
+		gl_panelBotones.setVerticalGroup(gl_panelBotones.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelBotones
+						.createSequentialGroup().addGroup(gl_panelBotones.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnPrev).addComponent(btnNext))
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		panelBotones.setLayout(gl_panelBotones);
 
 	}

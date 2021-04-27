@@ -2,6 +2,8 @@ package es.ieslavereda.Chess.model.common;
 
 import java.util.Set;
 
+import es.ieslavereda.Chess.vista.JPTablero;
+
 public class Queen extends Pieza{
 
 	public Queen(Color color, Coordenada posicion, JPTablero tablero) {

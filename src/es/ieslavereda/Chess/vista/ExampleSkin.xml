@@ -1,0 +1,55 @@
+<skin xmlns="http://weblookandfeel.com/XmlSkin">
+
+	<!-- Skin settings -->
+	<id>example.skin</id>
+	<class>es.ieslavereda.Chess.vista.MySkin</class>
+	<supportedSystems>all</supportedSystems>
+
+	<!-- Skin information -->
+	<title>Example skin</title>
+	<description>This is an example skin for Chess project</description>
+	<author>Joaquin Alonso</author>
+
+	<!-- Including WebLaF default skin, will use its style as a base -->
+	<include nearClass="com.alee.skin.light.WebLightSkin">resources/web-light-skin.xml</include>
+
+	<!-- Our custom panel style -->
+	<style type="panel" id="shadow">
+		<painter>
+			<decorations>
+				<decoration>
+					<WebShape round="5" />
+					<WebShadow type="outer" width="10" />
+					<LineBorder color="170,170,170" />
+				</decoration>
+			</decorations>
+		</painter>
+	</style>
+	<style type="button" id="white-cell">
+		<painter>
+			<decorations>
+				<decoration>
+					<ColorBackground color="255,255,255" />
+				</decoration>
+			</decorations>
+		</painter>
+	</style>
+	<style type="button" id="black-cell">
+		<painter>
+			<decorations>
+				<decoration>
+					<ColorBackground color="170,170,170" />
+				</decoration>
+			</decorations>
+		</painter>
+	</style>
+	<style type="button" id="color">
+        <painter>
+            <decorations>
+                <decoration>
+                    <ComponentBackground />
+                </decoration>
+            </decorations>
+        </painter>
+    </style>
+</skin>
